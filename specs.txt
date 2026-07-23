@@ -1,0 +1,36 @@
+1. description du site
+
+site de mariage de Stevie et Anderson
+une landing page
+un compte a rebour du debut du site : mois jour heure minutes (date le 26 novembre a 16h)
+
+code couleur : orange, tu vas t'insperer de la couleur qui est sur limage save the date.
+
+
+2. photos mariés et lieux
+
+le mariage traditionnelle aura lieu a bangang (ouest cameroun)
+le mariage civil aura lieu a Bafoussam le 26 11 
+la soirée aura lieu a Bafoussam le 26 11 
+
+retrouve quelques images de nous dans le dossier images
+dans le site ajoute aussi une images culture de l'ouest cameroun
+
+tu peux retoucher nos photos pour les rendre de bonnes qualités mais ne modifie pas nos visages
+
+3. formulaire
+
+au bas de la page, met un bouton qui envoi vers un formulaire, dans le formulaire precise qu'il est dedié que pour les amis du marié et de la mariée
+le formulaire permet de dire si on sera present ou non (nom, prenom, je serai present (oui/non) valider
+les données son mit dans une base sqlite.
+
+
+4. texte du site
+tu saura ce quil faut mettre
+
+
+6. technique
+
+nextjs
+sqlite or postgres or (prevoir connexion mysql) using prismadb
+a herberger sur vercel or hostinger

@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  --orange-deep: #c2410c;
+  --orange-bright: #ea580c;
+  --orange-glow: #fb923c;
+  --ember: #9a3412;
+  --copper: #b56a4a;
+  --ink: #1c1917;
+  --cream-soft: #fff7ed;
+  --sand: #ffedd5;
+}
+
+@theme inline {
+  --color-orange-deep: var(--orange-deep);
+  --color-orange-bright: var(--orange-bright);
+  --color-orange-glow: var(--orange-glow);
+  --color-ember: var(--ember);
+  --color-copper: var(--copper);
+  --color-ink: var(--ink);
+  --color-cream-soft: var(--cream-soft);
+  --color-sand: var(--sand);
+  --font-display: var(--font-display);
+  --font-script: var(--font-script);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--cream-soft);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes count-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.9s ease-out both;
+}
+
+.animate-fade-up-delay {
+  animation: fade-up 0.9s ease-out 0.2s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.9s ease-out 0.4s both;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 6s ease-in-out infinite;
+}
+
+.animate-count-in {
+  animation: count-in 0.6s ease-out both;
+}
+
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(251, 146, 60, 0.45), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 20%, rgba(194, 65, 12, 0.5), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 90%, rgba(154, 52, 18, 0.55), transparent 55%),
+    linear-gradient(160deg, #7c2d12 0%, #c2410c 40%, #9a3412 100%);
+}
+
+.section-texture {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(251, 146, 60, 0.12), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(194, 65, 12, 0.1), transparent 45%),
+    linear-gradient(180deg, #fff7ed 0%, #ffedd5 50%, #fff7ed 100%);
+}
