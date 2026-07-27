@@ -64,10 +64,14 @@ export type SiteContentData = {
   heroEyebrow: string;
   heroTagline: string;
   heroNameSize: "sm" | "md" | "lg" | "xl";
+  heroImageFit: "contain" | "cover";
   heroSlides: HeroSlide[];
   highlightEventTop: HighlightEvent;
   highlightEventBottom: HighlightEvent;
   highlightPhotos: HighlightPhoto[];
+  earlyCtaEnabled: boolean;
+  earlyCtaText: string;
+  earlyCtaButton: string;
   programmeEyebrow: string;
   programmeTitle: string;
   programmeIntro: string;
@@ -78,8 +82,10 @@ export type SiteContentData = {
   themeColors: ThemeColor[];
   styleAdvisorEnabled: boolean;
   styleAdvisorTitle: string;
+  pagneCardEnabled: boolean;
   pagneTitle: string;
   pagneText: string;
+  logementCardEnabled: boolean;
   logementTitle: string;
   logementText: string;
   logementNote: string;
@@ -87,6 +93,7 @@ export type SiteContentData = {
   galleryTitle: string;
   galleryIntro: string;
   galleryItems: GalleryItem[];
+  galleryEnabled: boolean;
   ctaEyebrow: string;
   ctaTitle: string;
   ctaText: string;
@@ -132,6 +139,7 @@ export const defaultSiteContent: SiteContentData = {
   heroTagline:
     "Parce que les plus belles histoires s'écrivent avec ceux que l'on aime, nous avons l'immense bonheur de vous annoncer notre union.",
   heroNameSize: "lg",
+  heroImageFit: "contain",
   heroSlides: [
     { src: "/images/couple-1.svg", alt: "Stevie et Anderson" },
     { src: "/images/couple-2.svg", alt: "Un moment partagé" },
@@ -152,6 +160,10 @@ export const defaultSiteContent: SiteContentData = {
     { src: "/images/couple-2.svg", alt: "Un moment partagé" },
     { src: "/images/ouest-cameroun.svg", alt: "Ouest Cameroun" },
   ],
+  earlyCtaEnabled: true,
+  earlyCtaText:
+    "Confirmez votre présence en un clic — le formulaire vous attend plus bas.",
+  earlyCtaButton: "Je participe",
   programmeEyebrow: "Programme",
   programmeTitle: "Programme des Festivités",
   programmeIntro: "",
@@ -210,9 +222,11 @@ export const defaultSiteContent: SiteContentData = {
   ],
   styleAdvisorEnabled: false,
   styleAdvisorTitle: "Conseiller de Style AI",
+  pagneCardEnabled: false,
   pagneTitle: "Le Pagne du Mariage",
   pagneText:
     "Nous avons le plaisir de vous informer que le pagne officiel de notre mariage est disponible. Vous pouvez confirmer votre commande via le formulaire de participation.",
+  logementCardEnabled: true,
   logementTitle: "Logement & Résidences",
   logementText:
     "Pour faciliter votre séjour et partager des moments ensemble, merci de nous indiquer vos besoins via le formulaire de participation.",
@@ -238,6 +252,7 @@ export const defaultSiteContent: SiteContentData = {
       label: "Ouest Cameroun",
     },
   ],
+  galleryEnabled: true,
   ctaEyebrow: "Participation",
   ctaTitle: "Serez-vous des nôtres ?",
   ctaText:
@@ -250,7 +265,7 @@ export const defaultSiteContent: SiteContentData = {
   rsvpPageSubtitle: "Stevie & Anderson — 26 novembre 2026 à Bafoussam",
   rsvpCollectEmail: true,
   rsvpCollectPhone: true,
-  rsvpPagneEnabled: true,
+  rsvpPagneEnabled: false,
   rsvpPagneLabel: "Pagne du mariage",
   rsvpPagneOptions: [
     "Pas besoin de commander",
@@ -417,6 +432,14 @@ export function mergeSiteContent(raw: unknown): SiteContentData {
       typeof raw.styleAdvisorEnabled === "boolean"
         ? raw.styleAdvisorEnabled
         : defaultSiteContent.styleAdvisorEnabled,
+    pagneCardEnabled:
+      typeof raw.pagneCardEnabled === "boolean"
+        ? raw.pagneCardEnabled
+        : defaultSiteContent.pagneCardEnabled,
+    logementCardEnabled:
+      typeof raw.logementCardEnabled === "boolean"
+        ? raw.logementCardEnabled
+        : defaultSiteContent.logementCardEnabled,
     rsvpCollectEmail:
       typeof raw.rsvpCollectEmail === "boolean"
         ? raw.rsvpCollectEmail
@@ -449,6 +472,18 @@ export function mergeSiteContent(raw: unknown): SiteContentData {
       typeof raw.playlistEnabled === "boolean"
         ? raw.playlistEnabled
         : defaultSiteContent.playlistEnabled,
+    earlyCtaEnabled:
+      typeof raw.earlyCtaEnabled === "boolean"
+        ? raw.earlyCtaEnabled
+        : defaultSiteContent.earlyCtaEnabled,
+    galleryEnabled:
+      typeof raw.galleryEnabled === "boolean"
+        ? raw.galleryEnabled
+        : defaultSiteContent.galleryEnabled,
+    heroImageFit:
+      raw.heroImageFit === "cover" || raw.heroImageFit === "contain"
+        ? raw.heroImageFit
+        : defaultSiteContent.heroImageFit,
     heroNameSize:
       raw.heroNameSize === "sm" ||
       raw.heroNameSize === "md" ||

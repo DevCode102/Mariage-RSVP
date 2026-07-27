@@ -32,7 +32,11 @@ type Props = {
   eyebrow: string;
   tagline: string;
   nameSize: SiteContentData["heroNameSize"];
+  imageFit?: SiteContentData["heroImageFit"];
   slides: HeroSlide[];
+  earlyCtaEnabled?: boolean;
+  earlyCtaText?: string;
+  earlyCtaButton?: string;
 };
 
 export function HeroBanner({
@@ -41,11 +45,19 @@ export function HeroBanner({
   eyebrow,
   tagline,
   nameSize,
+  imageFit = "contain",
   slides,
+  earlyCtaEnabled = false,
+  earlyCtaText = "",
+  earlyCtaButton = "Je participe",
 }: Props) {
   const [index, setIndex] = useState(0);
   const safeSlides = slides.length > 0 ? slides : [{ src: "/images/couple-1.svg", alt: "" }];
   const sizes = nameSizeClasses[nameSize] ?? nameSizeClasses.lg;
+  const fitClass =
+    imageFit === "cover"
+      ? "h-full w-full object-cover object-[center_20%]"
+      : "h-full w-full object-contain object-center";
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -57,7 +69,7 @@ export function HeroBanner({
   return (
     <section
       id="accueil"
-      className="relative flex min-h-[calc(100svh-4.25rem)] items-center justify-center overflow-hidden"
+      className="relative flex min-h-[calc(100svh-4.25rem)] items-center justify-center overflow-hidden bg-[#1a1410]"
     >
       <div className="absolute inset-0" aria-hidden>
         {safeSlides.map((slide, i) => (
@@ -71,7 +83,7 @@ export function HeroBanner({
             <img
               src={resolveMediaUrl(slide.src)}
               alt=""
-              className="h-full w-full object-contain object-center"
+              className={fitClass}
             />
           </div>
         ))}
@@ -106,6 +118,22 @@ export function HeroBanner({
             {partner1} et {partner2}
           </span>
         </h1>
+
+        {earlyCtaEnabled ? (
+          <div className="animate-fade-up-delay mt-8">
+            {earlyCtaText ? (
+              <p className="mx-auto max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
+                {earlyCtaText}
+              </p>
+            ) : null}
+            <a
+              href="#rsvp"
+              className="mt-5 inline-block border border-white/80 bg-white/10 px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm transition hover:bg-white hover:text-ink"
+            >
+              {earlyCtaButton}
+            </a>
+          </div>
+        ) : null}
 
         <p className="animate-fade-up-delay-2 mx-auto mt-7 max-w-lg text-sm leading-relaxed text-white/90 sm:text-base">
           {tagline}

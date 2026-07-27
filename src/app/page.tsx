@@ -24,7 +24,11 @@ export default async function HomePage() {
         eyebrow={content.heroEyebrow}
         tagline={content.heroTagline}
         nameSize={content.heroNameSize}
+        imageFit={content.heroImageFit}
         slides={content.heroSlides}
+        earlyCtaEnabled={content.earlyCtaEnabled}
+        earlyCtaText={content.earlyCtaText}
+        earlyCtaButton={content.earlyCtaButton}
       />
 
       <EventsShowcase
@@ -45,43 +49,46 @@ export default async function HomePage() {
         styleAdvisorTitle={content.styleAdvisorTitle}
         partner1={content.partner1}
         partner2={content.partner2}
+        pagneCardEnabled={content.pagneCardEnabled}
         pagneTitle={content.pagneTitle}
         pagneText={content.pagneText}
+        logementCardEnabled={content.logementCardEnabled}
         logementTitle={content.logementTitle}
         logementText={content.logementText}
         logementNote={content.logementNote}
       />
 
-      <section className="bg-ember px-6 py-20 sm:px-10 sm:py-24">
-        <div className="mx-auto max-w-5xl">
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-orange-200">
-            {content.galleryEyebrow}
-          </p>
-          <h2 className="font-display mt-3 text-4xl font-semibold text-white sm:text-5xl">
-            {content.galleryTitle}
-          </h2>
-          <p className="mt-4 max-w-xl text-orange-100/85">
-            {content.galleryIntro}
-          </p>
+      {content.galleryEnabled ? (
+        <section className="bg-ember px-6 py-20 sm:px-10 sm:py-24">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-orange-200">
+              {content.galleryEyebrow}
+            </p>
+            <h2 className="font-display mt-3 text-4xl font-semibold text-white sm:text-5xl">
+              {content.galleryTitle}
+            </h2>
+            <p className="mt-4 max-w-xl text-orange-100/85">
+              {content.galleryIntro}
+            </p>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
-            {content.galleryItems.map((item, index) => (
-              <figure key={`${item.src}-${index}`} className="group">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={resolveMediaUrl(item.src)}
-                  alt={item.alt}
-                  className="aspect-[3/4] w-full object-cover transition duration-700 group-hover:scale-[1.02]"
-                />
-                <figcaption className="mt-3 text-sm tracking-wide text-orange-100/80">
-                  {item.label}
-                </figcaption>
-              </figure>
-            ))}
+            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+              {content.galleryItems.map((item, index) => (
+                <figure key={`${item.src}-${index}`} className="group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={resolveMediaUrl(item.src)}
+                    alt={item.alt}
+                    className="aspect-[3/4] w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+                  />
+                  <figcaption className="mt-3 text-sm tracking-wide text-orange-100/80">
+                    {item.label}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-
+        </section>
+      ) : null}
       <RsvpSection
         title={content.rsvpPageTitle}
         notice={content.rsvpNotice}

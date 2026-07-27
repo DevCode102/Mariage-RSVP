@@ -257,7 +257,82 @@ export function SiteContentForm({ initial }: Props) {
               <option value="xl">Très grande</option>
             </select>
           </label>
+          <label className={labelClass}>
+            Affichage des images
+            <select
+              className={fieldClass}
+              value={data.heroImageFit}
+              onChange={(e) =>
+                update(
+                  "heroImageFit",
+                  e.target.value as SiteContentData["heroImageFit"],
+                )
+              }
+            >
+              <option value="contain">Toute l&apos;image (sans crop)</option>
+              <option value="cover">Plein écran (priorité visages en haut)</option>
+            </select>
+          </label>
         </div>
+
+        <div className="mt-8 space-y-4 border-t border-stone-100 pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Bouton sous les noms
+              </h3>
+              <p className="mt-1 text-sm text-stone-500">
+                CTA dans le carrousel, lien direct vers le formulaire (#rsvp).
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={data.earlyCtaEnabled}
+              onClick={() => update("earlyCtaEnabled", !data.earlyCtaEnabled)}
+              className={`inline-flex items-center gap-3 rounded-full border px-3 py-2 text-sm font-medium transition ${
+                data.earlyCtaEnabled
+                  ? "border-[#CB6B53]/40 bg-[#CB6B53]/10 text-[#9E4244]"
+                  : "border-stone-200 bg-stone-50 text-stone-500"
+              }`}
+            >
+              <span
+                className={`relative h-6 w-11 shrink-0 rounded-full transition ${
+                  data.earlyCtaEnabled ? "bg-[#CB6B53]" : "bg-stone-300"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition ${
+                    data.earlyCtaEnabled ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </span>
+              {data.earlyCtaEnabled ? "Activé" : "Masqué"}
+            </button>
+          </div>
+          {data.earlyCtaEnabled ? (
+            <>
+              <label className={labelClass}>
+                Texte d&apos;invitation
+                <textarea
+                  rows={2}
+                  className={fieldClass}
+                  value={data.earlyCtaText}
+                  onChange={(e) => update("earlyCtaText", e.target.value)}
+                />
+              </label>
+              <label className={labelClass}>
+                Libellé du bouton
+                <input
+                  className={fieldClass}
+                  value={data.earlyCtaButton}
+                  onChange={(e) => update("earlyCtaButton", e.target.value)}
+                />
+              </label>
+            </>
+          ) : null}
+        </div>
+
         <div className="mt-6 space-y-4">
           <div className="flex items-center justify-between">
             <p className={labelClass}>Slides du carrousel</p>
@@ -778,63 +853,136 @@ export function SiteContentForm({ initial }: Props) {
 
         <div className="mt-8 grid gap-4 border-t border-stone-100 pt-6 lg:grid-cols-2">
           <div className="space-y-3">
-            <h3 className="font-display text-xl font-semibold text-ink">
-              Carte Pagne
-            </h3>
-            <label className={labelClass}>
-              Titre
-              <input
-                className={fieldClass}
-                value={data.pagneTitle}
-                onChange={(e) => update("pagneTitle", e.target.value)}
-              />
-            </label>
-            <label className={labelClass}>
-              Texte
-              <textarea
-                rows={4}
-                className={fieldClass}
-                value={data.pagneText}
-                onChange={(e) => update("pagneText", e.target.value)}
-              />
-            </label>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Carte Pagne
+              </h3>
+              <label className="flex items-center gap-2 text-sm text-ink">
+                <input
+                  type="checkbox"
+                  checked={data.pagneCardEnabled}
+                  onChange={(e) =>
+                    update("pagneCardEnabled", e.target.checked)
+                  }
+                  className="accent-orange-bright size-4"
+                />
+                Afficher
+              </label>
+            </div>
+            {data.pagneCardEnabled ? (
+              <>
+                <label className={labelClass}>
+                  Titre
+                  <input
+                    className={fieldClass}
+                    value={data.pagneTitle}
+                    onChange={(e) => update("pagneTitle", e.target.value)}
+                  />
+                </label>
+                <label className={labelClass}>
+                  Texte
+                  <textarea
+                    rows={4}
+                    className={fieldClass}
+                    value={data.pagneText}
+                    onChange={(e) => update("pagneText", e.target.value)}
+                  />
+                </label>
+              </>
+            ) : (
+              <p className="text-sm text-stone-500">
+                Masquée sur le site. Tu peux la réactiver ou remplacer le texte
+                (dress code, infos pratiques, etc.).
+              </p>
+            )}
           </div>
           <div className="space-y-3">
-            <h3 className="font-display text-xl font-semibold text-ink">
-              Carte Logement
-            </h3>
-            <label className={labelClass}>
-              Titre
-              <input
-                className={fieldClass}
-                value={data.logementTitle}
-                onChange={(e) => update("logementTitle", e.target.value)}
-              />
-            </label>
-            <label className={labelClass}>
-              Texte
-              <textarea
-                rows={3}
-                className={fieldClass}
-                value={data.logementText}
-                onChange={(e) => update("logementText", e.target.value)}
-              />
-            </label>
-            <label className={labelClass}>
-              Note info
-              <textarea
-                rows={2}
-                className={fieldClass}
-                value={data.logementNote}
-                onChange={(e) => update("logementNote", e.target.value)}
-              />
-            </label>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Carte Logement
+              </h3>
+              <label className="flex items-center gap-2 text-sm text-ink">
+                <input
+                  type="checkbox"
+                  checked={data.logementCardEnabled}
+                  onChange={(e) =>
+                    update("logementCardEnabled", e.target.checked)
+                  }
+                  className="accent-orange-bright size-4"
+                />
+                Afficher
+              </label>
+            </div>
+            {data.logementCardEnabled ? (
+              <>
+                <label className={labelClass}>
+                  Titre
+                  <input
+                    className={fieldClass}
+                    value={data.logementTitle}
+                    onChange={(e) => update("logementTitle", e.target.value)}
+                  />
+                </label>
+                <label className={labelClass}>
+                  Texte
+                  <textarea
+                    rows={3}
+                    className={fieldClass}
+                    value={data.logementText}
+                    onChange={(e) => update("logementText", e.target.value)}
+                  />
+                </label>
+                <label className={labelClass}>
+                  Note info
+                  <textarea
+                    rows={2}
+                    className={fieldClass}
+                    value={data.logementNote}
+                    onChange={(e) => update("logementNote", e.target.value)}
+                  />
+                </label>
+              </>
+            ) : (
+              <p className="text-sm text-stone-500">
+                Masquée sur le site.
+              </p>
+            )}
           </div>
         </div>
       </section>
 
       <section className={sectionClass}>
-        <h2 className="font-display text-2xl font-semibold text-ink">Galerie</h2>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="font-display text-2xl font-semibold text-ink">
+            Galerie (Souvenirs)
+          </h2>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={data.galleryEnabled}
+            onClick={() => update("galleryEnabled", !data.galleryEnabled)}
+            className={`inline-flex items-center gap-3 rounded-full border px-3 py-2 text-sm font-medium transition ${
+              data.galleryEnabled
+                ? "border-[#CB6B53]/40 bg-[#CB6B53]/10 text-[#9E4244]"
+                : "border-stone-200 bg-stone-50 text-stone-500"
+            }`}
+          >
+            <span
+              className={`relative h-6 w-11 shrink-0 rounded-full transition ${
+                data.galleryEnabled ? "bg-[#CB6B53]" : "bg-stone-300"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition ${
+                  data.galleryEnabled ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </span>
+            {data.galleryEnabled ? "Section activée" : "Section masquée"}
+          </button>
+        </div>
+        {data.galleryEnabled ? (
+          <>
         <div className="mt-5 grid gap-4">
           <label className={labelClass}>
             Sur-titre
@@ -923,6 +1071,8 @@ export function SiteContentForm({ initial }: Props) {
             </div>
           ))}
         </div>
+          </>
+        ) : null}
       </section>
 
       <section className={sectionClass}>

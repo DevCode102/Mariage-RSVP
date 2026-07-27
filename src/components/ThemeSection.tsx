@@ -8,8 +8,10 @@ type Props = {
   styleAdvisorTitle: string;
   partner1: string;
   partner2: string;
+  pagneCardEnabled: boolean;
   pagneTitle: string;
   pagneText: string;
+  logementCardEnabled: boolean;
   logementTitle: string;
   logementText: string;
   logementNote: string;
@@ -51,12 +53,17 @@ export function ThemeSection({
   styleAdvisorTitle,
   partner1,
   partner2,
+  pagneCardEnabled,
   pagneTitle,
   pagneText,
+  logementCardEnabled,
   logementTitle,
   logementText,
   logementNote,
 }: Props) {
+  const showCards = pagneCardEnabled || logementCardEnabled;
+  const bothCards = pagneCardEnabled && logementCardEnabled;
+
   return (
     <section
       id="theme"
@@ -93,33 +100,41 @@ export function ThemeSection({
           />
         ) : null}
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          <article className="bg-white px-6 py-8 text-center shadow-[0_8px_28px_rgba(93,43,29,0.07)]">
-            <ScissorsIcon />
-            <h3 className="font-display mt-4 text-xl italic text-[#CB6B53]">
-              {pagneTitle}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-stone-500">
-              {pagneText}
-            </p>
-          </article>
-
-          <article className="bg-white px-6 py-8 text-center shadow-[0_8px_28px_rgba(93,43,29,0.07)]">
-            <BedIcon />
-            <h3 className="font-display mt-4 text-xl italic text-[#CB6B53]">
-              {logementTitle}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-stone-500">
-              {logementText}
-            </p>
-            {logementNote ? (
-              <p className="mt-4 flex items-start justify-center gap-2 text-left text-xs leading-relaxed text-stone-400 italic">
-                <InfoIcon />
-                <span>{logementNote}</span>
-              </p>
+        {showCards ? (
+          <div
+            className={`mt-10 grid gap-5 ${bothCards ? "sm:grid-cols-2" : "mx-auto max-w-xl"}`}
+          >
+            {pagneCardEnabled ? (
+              <article className="bg-white px-6 py-8 text-center shadow-[0_8px_28px_rgba(93,43,29,0.07)]">
+                <ScissorsIcon />
+                <h3 className="font-display mt-4 text-xl italic text-[#CB6B53]">
+                  {pagneTitle}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-stone-500">
+                  {pagneText}
+                </p>
+              </article>
             ) : null}
-          </article>
-        </div>
+
+            {logementCardEnabled ? (
+              <article className="bg-white px-6 py-8 text-center shadow-[0_8px_28px_rgba(93,43,29,0.07)]">
+                <BedIcon />
+                <h3 className="font-display mt-4 text-xl italic text-[#CB6B53]">
+                  {logementTitle}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-stone-500">
+                  {logementText}
+                </p>
+                {logementNote ? (
+                  <p className="mt-4 flex items-start justify-center gap-2 text-left text-xs leading-relaxed text-stone-400 italic">
+                    <InfoIcon />
+                    <span>{logementNote}</span>
+                  </p>
+                ) : null}
+              </article>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   );
