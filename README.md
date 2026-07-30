@@ -1,4 +1,4 @@
-# Stevie & Anderson — Site de mariage RSVP
+# Stevie & Anderson — Site de mariage RSVP.
 
 Site Next.js pour annoncer le mariage de **Stevie & Anderson**, collecter les confirmations de présence, et consulter les réponses dans un dashboard admin.
 
