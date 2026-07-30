@@ -56,6 +56,12 @@ export type HighlightPhoto = {
   alt: string;
 };
 
+export type StoryTimelineEntry = {
+  dateLabel: string;
+  title: string;
+  text: string;
+};
+
 export type SiteContentData = {
   partner1: string;
   partner2: string;
@@ -69,6 +75,10 @@ export type SiteContentData = {
   highlightEventTop: HighlightEvent;
   highlightEventBottom: HighlightEvent;
   highlightPhotos: HighlightPhoto[];
+  storyEyebrow: string;
+  storyTitle: string;
+  storyIntro: string;
+  storyTimeline: StoryTimelineEntry[];
   earlyCtaEnabled: boolean;
   earlyCtaText: string;
   earlyCtaButton: string;
@@ -160,6 +170,42 @@ export const defaultSiteContent: SiteContentData = {
     { src: "/images/couple-2.svg", alt: "Un moment partagé" },
     { src: "/images/ouest-cameroun.svg", alt: "Ouest Cameroun" },
   ],
+  storyEyebrow: "NOTRE HISTOIRE",
+  storyTitle: "Deux voisins, puis une évidence",
+  storyIntro:
+    "Quelques étapes qui racontent comment notre histoire a grandi, jusqu'à ce grand oui que nous préparons aujourd'hui.",
+  storyTimeline: [
+    {
+      dateLabel: "Avant 2019",
+      title: "Deux voisins",
+      text: "Nous n'étions que deux visages familiers croisés dans le même quartier.",
+    },
+    {
+      dateLabel: "Décembre 2019",
+      title: "Le premier rendez-vous",
+      text: "Cette rencontre a changé le cours des choses et a ouvert la première vraie page de notre histoire.",
+    },
+    {
+      dateLabel: "Septembre 2023",
+      title: "Un toit commun",
+      text: "Nous avons emménagé ensemble et fait grandir notre quotidien à deux.",
+    },
+    {
+      dateLabel: "Décembre 2023",
+      title: "Les fiançailles",
+      text: "Trois mois plus tard, nous nous sommes fiancés avec la certitude d'avancer ensemble.",
+    },
+    {
+      dateLabel: "Juillet 2025",
+      title: "Notre princesse",
+      text: "Notre plus grande joie est arrivée et a rempli nos vies de lumière.",
+    },
+    {
+      dateLabel: "Aujourd'hui",
+      title: "La plus belle page",
+      text: "Nous nous apprêtons à écrire notre mariage et avons hâte de le partager avec vous.",
+    },
+  ],
   earlyCtaEnabled: true,
   earlyCtaText:
     "Confirmez votre présence en un clic — le formulaire vous attend plus bas.",
@@ -234,7 +280,7 @@ export const defaultSiteContent: SiteContentData = {
   galleryEyebrow: "Souvenirs",
   galleryTitle: "Photos & racines",
   galleryIntro:
-    "Quelques images de nous, et un hommage à la culture de l'Ouest Cameroun — à remplacer bientôt par vos véritables clichés.",
+    "Quelques images qui racontent notre histoire et nos racines, en attendant de créer de nouveaux souvenirs ensemble.",
   galleryItems: [
     {
       src: "/images/couple-1.svg",
@@ -347,6 +393,18 @@ function normalizeSelectField(
     label: String(raw.label ?? fallback.label),
     enabled: typeof raw.enabled === "boolean" ? raw.enabled : fallback.enabled,
     options: options.length > 0 ? options : fallback.options,
+  };
+}
+
+function normalizeStoryTimelineEntry(
+  raw: unknown,
+  fallback: StoryTimelineEntry,
+): StoryTimelineEntry {
+  if (!isRecord(raw)) return fallback;
+  return {
+    dateLabel: String(raw.dateLabel ?? fallback.dateLabel),
+    title: String(raw.title ?? fallback.title),
+    text: String(raw.text ?? fallback.text),
   };
 }
 
@@ -517,6 +575,27 @@ export function mergeSiteContent(raw: unknown): SiteContentData {
     highlightPhotos: Array.isArray(raw.highlightPhotos)
       ? (raw.highlightPhotos as HighlightPhoto[])
       : defaultSiteContent.highlightPhotos,
+    storyEyebrow:
+      typeof raw.storyEyebrow === "string"
+        ? raw.storyEyebrow
+        : defaultSiteContent.storyEyebrow,
+    storyTitle:
+      typeof raw.storyTitle === "string"
+        ? raw.storyTitle
+        : defaultSiteContent.storyTitle,
+    storyIntro:
+      typeof raw.storyIntro === "string"
+        ? raw.storyIntro
+        : defaultSiteContent.storyIntro,
+    storyTimeline: Array.isArray(raw.storyTimeline)
+      ? (raw.storyTimeline as unknown[]).map((entry, index) =>
+          normalizeStoryTimelineEntry(
+            entry,
+            defaultSiteContent.storyTimeline[index] ??
+              defaultSiteContent.storyTimeline[0],
+          ),
+        )
+      : defaultSiteContent.storyTimeline,
     events: Array.isArray(raw.events)
       ? (raw.events as unknown[]).map(normalizeProgrammeEvent)
       : defaultSiteContent.events,

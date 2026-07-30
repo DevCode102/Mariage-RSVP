@@ -16,6 +16,7 @@ import type {
   ProgrammeScheduleItem,
   RsvpSelectOptionField,
   SiteContentData,
+  StoryTimelineEntry,
   ThemeColor,
 } from "@/lib/site-content";
 
@@ -103,6 +104,17 @@ export function SiteContentForm({ initial }: Props) {
       i === index ? { ...item, [key]: value } : item,
     );
     update("galleryItems", galleryItems);
+  }
+
+  function updateStoryEntry(
+    index: number,
+    key: keyof StoryTimelineEntry,
+    value: string,
+  ) {
+    const storyTimeline = data.storyTimeline.map((item, i) =>
+      i === index ? { ...item, [key]: value } : item,
+    );
+    update("storyTimeline", storyTimeline);
   }
 
   async function onSubmit(event: FormEvent) {
@@ -488,6 +500,111 @@ export function SiteContentForm({ initial }: Props) {
                   onChange={(e) =>
                     updateHighlightPhoto(index, "alt", e.target.value)
                   }
+                />
+              </label>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className={sectionClass}>
+        <h2 className="font-display text-2xl font-semibold text-ink">
+          Notre histoire
+        </h2>
+        <p className="mt-2 text-sm text-stone-600">
+          Timeline affichée juste après le compte à rebours sur le site public.
+        </p>
+
+        <div className="mt-5 grid gap-4">
+          <label className={labelClass}>
+            Sur-titre
+            <input
+              className={fieldClass}
+              value={data.storyEyebrow}
+              onChange={(e) => update("storyEyebrow", e.target.value)}
+            />
+          </label>
+          <label className={labelClass}>
+            Titre
+            <input
+              className={fieldClass}
+              value={data.storyTitle}
+              onChange={(e) => update("storyTitle", e.target.value)}
+            />
+          </label>
+          <label className={labelClass}>
+            Introduction
+            <textarea
+              rows={2}
+              className={fieldClass}
+              value={data.storyIntro}
+              onChange={(e) => update("storyIntro", e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="mt-6 space-y-3">
+          <div className="flex items-center justify-between">
+            <p className={labelClass}>Étapes</p>
+            <button
+              type="button"
+              className="text-xs uppercase tracking-[0.14em] text-orange-deep"
+              onClick={() =>
+                update("storyTimeline", [
+                  ...data.storyTimeline,
+                  {
+                    dateLabel: "Nouvelle date",
+                    title: "Nouvelle étape",
+                    text: "Décrivez ce moment important de votre histoire.",
+                  },
+                ])
+              }
+            >
+              + Ajouter
+            </button>
+          </div>
+
+          {data.storyTimeline.map((item, index) => (
+            <div key={index} className="space-y-3 border border-stone-100 p-3">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-ink">Étape {index + 1}</p>
+                <button
+                  type="button"
+                  className="text-xs text-stone-500 hover:text-red-700"
+                  onClick={() =>
+                    update(
+                      "storyTimeline",
+                      data.storyTimeline.filter((_, i) => i !== index),
+                    )
+                  }
+                  disabled={data.storyTimeline.length <= 1}
+                >
+                  Retirer
+                </button>
+              </div>
+              <label className={labelClass}>
+                Date affichée
+                <input
+                  className={fieldClass}
+                  value={item.dateLabel}
+                  onChange={(e) => updateStoryEntry(index, "dateLabel", e.target.value)}
+                />
+              </label>
+              <label className={labelClass}>
+                Titre
+                <input
+                  className={fieldClass}
+                  value={item.title}
+                  onChange={(e) => updateStoryEntry(index, "title", e.target.value)}
+                />
+              </label>
+              <label className={labelClass}>
+                Texte
+                <textarea
+                  rows={3}
+                  className={fieldClass}
+                  value={item.text}
+                  onChange={(e) => updateStoryEntry(index, "text", e.target.value)}
                 />
               </label>
             </div>

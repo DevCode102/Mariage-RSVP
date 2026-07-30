@@ -69,7 +69,7 @@ export function HeroBanner({
   return (
     <section
       id="accueil"
-      className="relative flex min-h-[calc(100svh-4.25rem)] items-center justify-center overflow-hidden bg-[#1a1410]"
+      className="relative flex min-h-[calc(100svh-4.25rem)] items-center justify-center overflow-hidden bg-[#f29c87] text-white sm:min-h-[calc(100svh-4.25rem)]"
     >
       <div className="absolute inset-0" aria-hidden>
         {safeSlides.map((slide, i) => (
@@ -97,22 +97,20 @@ export function HeroBanner({
 
         <h1 className="animate-fade-up-delay !mt-8 text-white">
           <span
-            className={`font-display block font-medium tracking-[-0.02em] ${sizes.name}`}
+            className={`font-display block font-medium tracking-[-0.02em] sm:mb-2 ${sizes.name}`}
           >
             {partner1}
           </span>
-          <span className="mt-1 flex items-baseline justify-center gap-2 sm:mt-2 sm:gap-3 md:gap-4">
-            <span
-              className={`font-script leading-none text-[#E8B4A0] ${sizes.amp}`}
-              aria-hidden
+          <span
+            className={`font-script block font-medium text-[#E8B4A0] ${sizes.amp}`}
+            aria-hidden
             >
-              &amp;
-            </span>
-            <span
-              className={`font-display font-medium tracking-[-0.02em] ${sizes.name}`}
-            >
-              {partner2}
-            </span>
+            &amp;
+          </span>
+          <span
+            className={`font-display block font-medium tracking-[-0.02em] ${sizes.name}`}
+          >
+            {partner2}
           </span>
           <span className="sr-only">
             {partner1} et {partner2}

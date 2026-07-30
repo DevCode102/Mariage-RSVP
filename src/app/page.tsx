@@ -1,12 +1,13 @@
 import { EventsShowcase } from "@/components/EventsShowcase";
+import { Gallery } from "@/components/Gallery";
 import { GiftsSection } from "@/components/GiftsSection";
 import { HeroBanner } from "@/components/HeroBanner";
 import { PlaylistSection } from "@/components/PlaylistSection";
 import { ProgrammeSection } from "@/components/ProgrammeSection";
+import { OurStorySection } from "@/components/OurStorySection";
 import { RsvpSection } from "@/components/RsvpSection";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ThemeSection } from "@/components/ThemeSection";
-import { resolveMediaUrl } from "@/lib/media";
 import { getSiteContent } from "@/lib/site-content-db";
 import { extractSoundCloudEmbed } from "@/lib/soundcloud";
 
@@ -17,7 +18,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      <SiteHeader initials={content.initials} />
+      <SiteHeader initials={content.initials} galleryEnabled={content.galleryEnabled} />
       <HeroBanner
         partner1={content.partner1}
         partner2={content.partner2}
@@ -35,6 +36,13 @@ export default async function HomePage() {
         eventTop={content.highlightEventTop}
         eventBottom={content.highlightEventBottom}
         photos={content.highlightPhotos}
+      />
+
+      <OurStorySection
+        eyebrow={content.storyEyebrow}
+        title={content.storyTitle}
+        intro={content.storyIntro}
+        timeline={content.storyTimeline}
       />
 
       <ProgrammeSection
@@ -59,35 +67,12 @@ export default async function HomePage() {
       />
 
       {content.galleryEnabled ? (
-        <section className="bg-ember px-6 py-20 sm:px-10 sm:py-24">
-          <div className="mx-auto max-w-5xl">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-orange-200">
-              {content.galleryEyebrow}
-            </p>
-            <h2 className="font-display mt-3 text-4xl font-semibold text-white sm:text-5xl">
-              {content.galleryTitle}
-            </h2>
-            <p className="mt-4 max-w-xl text-orange-100/85">
-              {content.galleryIntro}
-            </p>
-
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
-              {content.galleryItems.map((item, index) => (
-                <figure key={`${item.src}-${index}`} className="group">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={resolveMediaUrl(item.src)}
-                    alt={item.alt}
-                    className="aspect-[3/4] w-full object-cover transition duration-700 group-hover:scale-[1.02]"
-                  />
-                  <figcaption className="mt-3 text-sm tracking-wide text-orange-100/80">
-                    {item.label}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Gallery
+          eyebrow={content.galleryEyebrow}
+          title={content.galleryTitle}
+          intro={content.galleryIntro}
+          items={content.galleryItems}
+        />
       ) : null}
       <RsvpSection
         title={content.rsvpPageTitle}

@@ -5,18 +5,27 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "#accueil", label: "Accueil" },
+  { href: "#histoire", label: "Notre Histoire" },
   { href: "#programme", label: "Programme" },
   { href: "#theme", label: "Thème" },
+  { href: "#gallery", label: "Galerie" },
   { href: "#rsvp", label: "Participation", accent: true },
 ];
 
 type Props = {
   initials: string;
+  galleryEnabled?: boolean;
 };
 
-export function SiteHeader({ initials }: Props) {
+export function SiteHeader({ initials, galleryEnabled }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  let linksCopy = [...links];
+
+  if (!galleryEnabled) {
+    linksCopy = linksCopy.filter((link) => link.href !== "#gallery");
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -43,7 +52,7 @@ export function SiteHeader({ initials }: Props) {
           className="hidden items-center gap-6 lg:gap-8 md:flex"
           aria-label="Principal"
         >
-          {links.map((link) => (
+          {linksCopy.map((link) => (
             <Link
               key={link.href}
               href={link.href}
